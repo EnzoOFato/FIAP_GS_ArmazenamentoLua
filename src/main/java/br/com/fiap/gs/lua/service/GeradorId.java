@@ -1,9 +1,9 @@
 package br.com.fiap.gs.lua.service;
 
 public class GeradorId {
-    private Integer id = 0;
+    private Long id = 0L;
 
-    public Integer geraId() {
+    public Long geraId() {
         return id++;
     }
 }

@@ -3,23 +3,23 @@ package br.com.fiap.gs.lua.model;
 import br.com.fiap.gs.lua.service.GeradorId;
 
 public class Robo {
-    private Integer id;
+    private Long id;
     private String codigoMaquina;
-    private Double porcentagemBateria;
     private Double pesoMaximoSuportado;
+    private Double volumeMaximoSuportado;
 
     private final static GeradorId gerador = new GeradorId();
 
     public Robo(){}
 
-    public Robo(Integer id, String codigoMaquina, Double porcentagemBateria, Double pesoMaximoSuportado) {
+    public Robo(Long id, String codigoMaquina, Double porcentagemBateria, Double pesoMaximoSuportado, Double volumeMaximoSuportado) {
         this.id = gerador.geraId();
         this.codigoMaquina = codigoMaquina;
-        this.porcentagemBateria = porcentagemBateria;
         this.pesoMaximoSuportado = pesoMaximoSuportado;
+        this.volumeMaximoSuportado = volumeMaximoSuportado;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -31,19 +31,19 @@ public class Robo {
         this.codigoMaquina = codigoMaquina;
     }
 
-    public Double getPorcentagemBateria() {
-        return porcentagemBateria;
-    }
-
-    public void setPorcentagemBateria(Double porcentagemBateria) {
-        this.porcentagemBateria = porcentagemBateria;
-    }
-
     public Double getPesoMaximoSuportado() {
         return pesoMaximoSuportado;
     }
 
     public void setPesoMaximoSuportado(Double pesoMaximoSuportado) {
         this.pesoMaximoSuportado = pesoMaximoSuportado;
+    }
+
+    public Double getVolumeMaximoSuportado() {
+        return volumeMaximoSuportado;
+    }
+
+    public void setVolumeMaximoSuportado(Double volumeMaximoSuportado) {
+        this.volumeMaximoSuportado = volumeMaximoSuportado;
     }
 }
