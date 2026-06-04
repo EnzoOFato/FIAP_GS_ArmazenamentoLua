@@ -43,4 +43,15 @@ public class ItemService {
                 i -> new ItemDTO(i.getId(), i.getNome(), i.getPeso(), i.getVolume(), i.getIdTeamPertencimento())
         ).collect(Collectors.toList());
     }
+
+    public List<ItemDTO> getPorNome(String nome) {
+        return passaListaObjParaDTO(itemList.stream()
+                .filter(i -> i.getNome().toLowerCase().contains(nome)).collect(Collectors.toList()));
+    }
+
+    private List<ItemDTO> passaListaObjParaDTO(List<Item> itens) {
+        return itens.stream().map(
+                i -> new ItemDTO(i.getId(), i.getNome(), i.getPeso(), i.getVolume(), i.getIdTeamPertencimento())
+        ).toList();
+    }
 }

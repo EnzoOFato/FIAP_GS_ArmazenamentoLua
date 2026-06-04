@@ -24,4 +24,9 @@ public class ItemContorller {
     public List<ItemDTO> getAllItens() {
         return itemService.getAll();
     }
+
+    @GetMapping("/get-nome/{nome}")
+    public List<ItemDTO> getItemPorNome(@PathVariable String nome) {
+        return itemService.getPorNome(nome);
+    }
 }
