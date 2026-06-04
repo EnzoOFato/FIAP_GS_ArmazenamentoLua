@@ -20,6 +20,8 @@ public class RoboService {
         try {
             if (verificaRoboJaExistente(roboDTO.codigoMaquina())) throw new RoboException("Cód. de Robo já cadastrado");
 
+            if (roboDTO.pesoMaximoSuportado() < 1 || roboDTO.volumeMaximoSuportado() < 0) throw new RoboException("PESOS INVÁLIDOS");
+
             Robo robo = new Robo(roboDTO.codigoMaquina(), roboDTO.pesoMaximoSuportado(), roboDTO.volumeMaximoSuportado());
 
             if (verificaAtributoNulo(robo)) throw new RoboException("ROBO COM CAMPO NULO");

@@ -7,6 +7,7 @@ public class Item {
     private String nome;
     private Double peso;
     private Double volume;
+    private Long idTeamPertencimento;
 
     private static final GeradorId gerador = new GeradorId();
 
@@ -17,6 +18,7 @@ public class Item {
         this.nome = nome;
         this.peso = peso;
         this.volume = volume;
+        this.idTeamPertencimento = null;
     }
 
     public Long getId() {
@@ -45,5 +47,13 @@ public class Item {
 
     public void setVolume(Double volume) {
         this.volume = volume;
+    }
+
+    public Long getIdTeamPertencimento() {
+        return idTeamPertencimento;
+    }
+
+    public void setIdTeamPertencimento(Long idTeamPertencimento) {
+        this.idTeamPertencimento = idTeamPertencimento;
     }
 }

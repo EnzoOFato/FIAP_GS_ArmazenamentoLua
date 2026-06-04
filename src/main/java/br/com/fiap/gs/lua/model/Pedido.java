@@ -5,6 +5,7 @@ import br.com.fiap.gs.lua.service.GeradorId;
 public class Pedido {
     private Long id;
     private String status;
+    private String tipo;
     private Item item;
     private Astronauta astronauta;
 
@@ -12,9 +13,10 @@ public class Pedido {
 
     public Pedido(){}
 
-    public Pedido(Item item, Astronauta astronauta) {
+    public Pedido(String tipo, Item item, Astronauta astronauta) {
         this.id = gerador.geraId();
         this.status = "PENDENTE";
+        this.tipo = tipo;
         this.item = item;
         this.astronauta = astronauta;
     }
@@ -31,11 +33,11 @@ public class Pedido {
         this.status = status;
     }
 
-    public Item getItens() {
+    public Item getItem() {
         return item;
     }
 
-    public void setItens(Item item) {
+    public void setItem(Item item) {
         this.item = item;
     }
 
@@ -45,5 +47,13 @@ public class Pedido {
 
     public void setAstronauta(Astronauta astronauta) {
         this.astronauta = astronauta;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
