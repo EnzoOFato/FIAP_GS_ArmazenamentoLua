@@ -4,10 +4,9 @@ import br.com.fiap.gs.lua.dto.AstronautaDTO;
 import br.com.fiap.gs.lua.service.AstronautaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/astronauta")
@@ -19,6 +18,11 @@ public class AstronautaController {
     @PostMapping("/adicionar")
     public ResponseEntity<String> adicionarAstronauta(@RequestBody AstronautaDTO astronautaDTO) {
         return astronautaService.adicionar(astronautaDTO);
+    }
+
+    @GetMapping("/get-astronautas")
+    public List<AstronautaDTO> getAllAstronautas() {
+        return astronautaService.getAll();
     }
 
 }

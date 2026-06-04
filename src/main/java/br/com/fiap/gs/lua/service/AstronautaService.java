@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AstronautaService {
 
@@ -27,4 +30,9 @@ public class AstronautaService {
         }
     }
 
+    public List<AstronautaDTO> getAll() {
+        return astronautaList.stream()
+                .map(a -> new AstronautaDTO(a.getId(), a.getNome(), a.getCargo(), a.getTeam()))
+                .collect(Collectors.toList());
+    }
 }
