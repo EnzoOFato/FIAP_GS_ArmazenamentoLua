@@ -1,7 +1,7 @@
 package br.com.fiap.gs.lua.controller;
 
 import br.com.fiap.gs.lua.dto.ItemDTO;
-import br.com.fiap.gs.lua.model.ItemService;
+import br.com.fiap.gs.lua.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
