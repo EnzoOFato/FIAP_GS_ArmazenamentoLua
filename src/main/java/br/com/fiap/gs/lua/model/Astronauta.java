@@ -6,15 +6,15 @@ public class Astronauta {
     private Long id;
     private String nome;
     private String cargo;
-    private Team team;
+    private Long teamId;
 
     private static final GeradorId gerador = new GeradorId();
 
-    public Astronauta(String nome, String cargo, Team team) {
+    public Astronauta(String nome, String cargo) {
         this.id = gerador.geraId();
         this.nome = nome;
         this.cargo = cargo;
-        this.team = team;
+        this.teamId = null;
     }
 
     public Long getId() {
@@ -37,21 +37,11 @@ public class Astronauta {
         this.cargo = cargo;
     }
 
-    public Team getTeam() {
-        return team;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    @Override
-    public String toString() {
-        return "Astronauta{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cargo='" + cargo + '\'' +
-                ", team=" + team +
-                '}';
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 }

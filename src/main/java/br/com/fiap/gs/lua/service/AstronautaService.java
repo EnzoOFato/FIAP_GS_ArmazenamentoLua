@@ -18,9 +18,10 @@ public class AstronautaService {
     private AstronautaList astronautaList;
 
     public ResponseEntity<String> adicionar(AstronautaDTO astronautaDTO) {
-        Astronauta astronautaObject = new Astronauta(astronautaDTO.nome(), astronautaDTO.cargo(), astronautaDTO.team());
         try {
-            if (VerificaNulo.verificaAtributoNulo(astronautaObject)) throw new AstronautaException("Presença de campo Nulo");
+            Astronauta astronautaObject = new Astronauta(astronautaDTO.nome(), astronautaDTO.cargo().toUpperCase());
+
+            if (astronautaObject.getNome() == null || astronautaObject.getCargo() == null) throw new AstronautaException("Presença de campo esscencial Nulo");
 
             astronautaList.add(astronautaObject);
 
@@ -32,7 +33,7 @@ public class AstronautaService {
 
     public List<AstronautaDTO> getAll() {
         return astronautaList.stream()
-                .map(a -> new AstronautaDTO(a.getId(), a.getNome(), a.getCargo(), a.getTeam()))
+                .map(a -> new AstronautaDTO(a.getId(), a.getNome(), a.getCargo(), a.getTeamId()))
                 .collect(Collectors.toList());
     }
 }
