@@ -52,20 +52,27 @@ public class RoboService {
         return robo.getCodigoMaquina() == null || robo.getPesoMaximoSuportado() == null || robo.getVolumeMaximoSuportado() == null;
     }
 
-    public boolean processarPedido(Pedido pedido) {
+    public void processarPedido(Pedido pedido) {
         Robo roboResponsavel = acharRoboResponsavel(pedido);
 
         if (roboResponsavel == null) {
-            return false;
+            throw new PedidoException("Nenhum robo disponivel tente mais tarde");
         }
 
         roboResponsavel.getPedidos().add(pedido);
-        return true;
     }
 
     private Robo acharRoboResponsavel(Pedido pedido) {
         return roboList.stream().filter(r -> r.getVolumeMaximoSuportado() > pedido.getItem().getVolume()
                 && r.getPesoMaximoSuportado() > pedido.getItem().getPeso()
                 && r.getPedidos().isEmpty()).findFirst().orElse(null);
+    }
+
+    public Pedido finalizar(Long id) {
+        Robo roboComPedido = roboList.stream().filter(r -> r.getPedidos().peek().getId().equals(id)).findFirst().orElse(null);
+
+        if (roboComPedido == null) throw new PedidoException("Pedido não está com nenhum robô");
+
+        return roboComPedido.getPedidos().remove();
     }
 }

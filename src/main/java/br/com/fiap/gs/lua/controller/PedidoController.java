@@ -30,4 +30,9 @@ public class PedidoController {
     public ResponseEntity<String> realizaPedido(@PathVariable Long id) {
         return pedidoService.realizarPedido(id);
     }
+
+    @PutMapping("/completar/{id}")
+    public ResponseEntity<String> completarPedido(@PathVariable Long id) {
+        return pedidoService.completarPedido(id);
+    }
 }

@@ -46,12 +46,14 @@ public class PedidoService {
             itemPedido.setIdTeamPertencimento(astronauta.getTeamId());
 
             if (pedidoDTO.tipo().equals("armazenar")) {
+                if (itemPedido.getEstaArmazenado()) throw new PedidoException("PEDIDO ESTÁ ARMAZENADO\nImpossível ARMAZENAR");
+
                 teamService.adicionarItem(itemPedido, astronauta.getTeamId());
+
+                itemPedido.setEstaArmazenado(true);
             }
-            else if (pedidoDTO.tipo().equals("retirar")) {
-                if (astronauta.getTeamId().equals(itemPedido.getIdTeamPertencimento()) && itemPedido.getEstaArmazenado()) {
-                    throw new PedidoException("A RETIRADA DE ITEM DEVE SER FEITA POR UM ASTRONAUTA DO TIME DO ITEM");
-                }
+            else if (pedidoDTO.tipo().equals("retirar") && itemPedido.getEstaArmazenado()) {
+                if (!itemPedido.getEstaArmazenado()) throw new PedidoException("PEDIDO NÃO ESTÁ ARMAZENADO\nImpossível RETIRAR");
             }
             else throw new PedidoException("TIPO DO PEDIDO: DEVE SER armazenar OU retirar");
 
@@ -79,13 +81,29 @@ public class PedidoService {
 
             if (pedidoRealizar == null) throw new PedidoException("Pedido não encontrado");
 
-            if (!roboService.processarPedido(pedidoRealizar)) throw new PedidoException("NENHUM ROBO DISPONIVEL");
+            roboService.processarPedido(pedidoRealizar);
 
             pedidoRealizar.setStatus("EM ANDAMENTO");
 
             return ResponseEntity.ok("Pedido em andamento");
         } catch (PedidoException e) {
-            return ResponseEntity.badRequest().body("<ERRO AO EFETUAR PEDIDO>\n");
+            return ResponseEntity.badRequest().body("<ERRO AO EFETUAR PEDIDO>\n" + e.getMessage());
+        }
+    }
+
+    public ResponseEntity<String> completarPedido(Long id) {
+        try {
+            Pedido pedidoCompletar = pedidoList.getById(id);
+
+            if (pedidoCompletar.getStatus().equals("PENDENTE")) throw new PedidoException("PEDIDO SEQUER ESTÀ EM ANDAMENTO");
+
+            Pedido pedido = roboService.finalizar(id);
+
+            pedido.setStatus("COMPLETO");
+
+            return ResponseEntity.ok().body("Pedido de id %d finalizado, robo livre".formatted(pedido.getId()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("<ERRO AO COMPLETAR PEDIDO>\n" + e.getMessage());
         }
     }
 }
