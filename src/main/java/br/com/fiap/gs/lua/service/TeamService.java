@@ -24,15 +24,17 @@ public class TeamService {
     private AstronautaList astronautaList;
 
     public ResponseEntity<String> adiciona(TeamDTO teamDTO) {
-        Team teamObject = new Team(teamDTO.nome().toUpperCase());
         try {
-            if (teamObject.getNome() == null) throw new TeamException("Time deve ser cadastrado com nome");
+            if (teamDTO.nome() == null) throw new TeamException("Time deve ser cadastrado com nome");
+            if (verificaNomeTime(teamDTO.nome())) throw new TeamException("Nome de time já cadastrado");
+
+            Team teamObject = new Team(teamDTO.nome().toUpperCase());
 
             teamList.add(teamObject);
 
             return ResponseEntity.ok("Time cadastrado com sucesso");
         } catch (TeamException e) {
-            return ResponseEntity.badRequest().body("<ERRO DE CADASTRO DE TIME>\n " + e.getMessage());
+            return ResponseEntity.badRequest().body("<ERRO DE CADASTRO DE TIME>\n" + e.getMessage());
         }
     }
 
@@ -57,7 +59,11 @@ public class TeamService {
 
             return ResponseEntity.ok("Membro adicionado com sucesso");
         } catch (TeamException | AstronautaException e) {
-            return ResponseEntity.badRequest().body("<ERRO AO ADICIONAR MEMBRO>\n " + e.getMessage());
+            return ResponseEntity.badRequest().body("<ERRO AO ADICIONAR MEMBRO>\n" + e.getMessage());
         }
+    }
+
+    public boolean verificaNomeTime(String nomeParaVerificar) {
+        return teamList.stream().anyMatch(t -> t.getNome().equals(nomeParaVerificar));
     }
 }
