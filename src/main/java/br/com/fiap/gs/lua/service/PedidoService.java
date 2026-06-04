@@ -26,6 +26,12 @@ public class PedidoService {
     @Autowired
     private AstronautaList astronautaList;
 
+    @Autowired
+    private RoboService roboService;
+
+    @Autowired
+    private TeamService teamService;
+
     public ResponseEntity<String> adiconarPedido(PedidoDTO pedidoDTO, Long idItem, Long idAstronauta) {
         try {
             Item itemPedido = itemList.getById(idItem);
@@ -37,9 +43,17 @@ public class PedidoService {
 
             if (pedidoDTO.tipo() == null) throw new PedidoException("DECLARE O TIPO");
 
-            if (!pedidoDTO.tipo().equals("armazenar") && !pedidoDTO.tipo().equals("retirar")) {
-                throw new PedidoException("TIPO DE PEDIDO INCORRETO\nCERTO: armazenar OU retirar");
+            itemPedido.setIdTeamPertencimento(astronauta.getTeamId());
+
+            if (pedidoDTO.tipo().equals("armazenar")) {
+                teamService.adicionarItem(itemPedido, astronauta.getTeamId());
             }
+            else if (pedidoDTO.tipo().equals("retirar")) {
+                if (astronauta.getTeamId().equals(itemPedido.getIdTeamPertencimento()) && itemPedido.getEstaArmazenado()) {
+                    throw new PedidoException("A RETIRADA DE ITEM DEVE SER FEITA POR UM ASTRONAUTA DO TIME DO ITEM");
+                }
+            }
+            else throw new PedidoException("TIPO DO PEDIDO: DEVE SER armazenar OU retirar");
 
             Pedido pedido = new Pedido(pedidoDTO.tipo(), itemPedido, astronauta);
 
@@ -57,5 +71,21 @@ public class PedidoService {
                         p.getTipo(), p.getItem(),
                         p.getAstronauta())
         ).collect(Collectors.toList());
+    }
+
+    public ResponseEntity<String> realizarPedido(Long id) {
+        try {
+            Pedido pedidoRealizar = pedidoList.getById(id);
+
+            if (pedidoRealizar == null) throw new PedidoException("Pedido não encontrado");
+
+            if (!roboService.processarPedido(pedidoRealizar)) throw new PedidoException("NENHUM ROBO DISPONIVEL");
+
+            pedidoRealizar.setStatus("EM ANDAMENTO");
+
+            return ResponseEntity.ok("Pedido em andamento");
+        } catch (PedidoException e) {
+            return ResponseEntity.badRequest().body("<ERRO AO EFETUAR PEDIDO>\n");
+        }
     }
 }

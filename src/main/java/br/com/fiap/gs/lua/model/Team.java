@@ -52,8 +52,4 @@ public class Team {
         astronautas.add(astronauta);
     }
 
-    public void adicionarItem(Item item) {
-        itens.add(item);
-    }
-
 }

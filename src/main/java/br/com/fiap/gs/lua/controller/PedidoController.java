@@ -25,4 +25,9 @@ public class PedidoController {
     public List<PedidoDTO> todosPedidos() {
         return pedidoService.getAll();
     }
+
+    @PutMapping("/realizar/{id}")
+    public ResponseEntity<String> realizaPedido(@PathVariable Long id) {
+        return pedidoService.realizarPedido(id);
+    }
 }

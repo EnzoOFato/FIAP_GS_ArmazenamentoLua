@@ -6,6 +6,8 @@ import br.com.fiap.gs.lua.dto.TeamDTO;
 import br.com.fiap.gs.lua.exception.AstronautaException;
 import br.com.fiap.gs.lua.exception.TeamException;
 import br.com.fiap.gs.lua.model.Astronauta;
+import br.com.fiap.gs.lua.model.Item;
+import br.com.fiap.gs.lua.model.Pedido;
 import br.com.fiap.gs.lua.model.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -65,5 +67,11 @@ public class TeamService {
 
     public boolean verificaNomeTime(String nomeParaVerificar) {
         return teamList.stream().anyMatch(t -> t.getNome().equals(nomeParaVerificar));
+    }
+
+    public void adicionarItem(Item item, Long id) {
+        Team teamParaAdicao = teamList.getById(id);
+        if (teamParaAdicao.getItens().contains(item)) return;
+        teamParaAdicao.getItens().add(item);
     }
 }

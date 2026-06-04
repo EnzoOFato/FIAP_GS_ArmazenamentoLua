@@ -2,7 +2,9 @@ package br.com.fiap.gs.lua.service;
 
 import br.com.fiap.gs.lua.armazenamento.RoboList;
 import br.com.fiap.gs.lua.dto.RoboDTO;
+import br.com.fiap.gs.lua.exception.PedidoException;
 import br.com.fiap.gs.lua.exception.RoboException;
+import br.com.fiap.gs.lua.model.Pedido;
 import br.com.fiap.gs.lua.model.Robo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +50,22 @@ public class RoboService {
 
     private boolean verificaAtributoNulo(Robo robo) {
         return robo.getCodigoMaquina() == null || robo.getPesoMaximoSuportado() == null || robo.getVolumeMaximoSuportado() == null;
+    }
+
+    public boolean processarPedido(Pedido pedido) {
+        Robo roboResponsavel = acharRoboResponsavel(pedido);
+
+        if (roboResponsavel == null) {
+            return false;
+        }
+
+        roboResponsavel.getPedidos().add(pedido);
+        return true;
+    }
+
+    private Robo acharRoboResponsavel(Pedido pedido) {
+        return roboList.stream().filter(r -> r.getVolumeMaximoSuportado() > pedido.getItem().getVolume()
+                && r.getPesoMaximoSuportado() > pedido.getItem().getPeso()
+                && r.getPedidos().isEmpty()).findFirst().orElse(null);
     }
 }
