@@ -12,7 +12,7 @@ public class Item {
 
     public Item() {}
 
-    public Item(Long id, String nome, Double peso, Double volume) {
+    public Item(String nome, Double peso, Double volume) {
         this.id = gerador.geraId();
         this.nome = nome;
         this.peso = peso;

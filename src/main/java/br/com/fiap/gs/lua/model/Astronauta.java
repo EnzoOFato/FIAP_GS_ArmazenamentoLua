@@ -10,7 +10,7 @@ public class Astronauta {
 
     private static final GeradorId gerador = new GeradorId();
 
-    public Astronauta(Long id, String nome, String cargo, Team team) {
+    public Astronauta(String nome, String cargo, Team team) {
         this.id = gerador.geraId();
         this.nome = nome;
         this.cargo = cargo;
@@ -43,5 +43,15 @@ public class Astronauta {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    @Override
+    public String toString() {
+        return "Astronauta{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cargo='" + cargo + '\'' +
+                ", team=" + team +
+                '}';
     }
 }

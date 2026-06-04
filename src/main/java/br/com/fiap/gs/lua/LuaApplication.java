@@ -9,5 +9,4 @@ public class LuaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LuaApplication.class, args);
 	}
-
 }

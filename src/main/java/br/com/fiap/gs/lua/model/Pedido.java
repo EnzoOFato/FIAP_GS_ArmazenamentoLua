@@ -2,20 +2,20 @@ package br.com.fiap.gs.lua.model;
 
 import br.com.fiap.gs.lua.service.GeradorId;
 
-import java.util.List;
-
 public class Pedido {
     private Long id;
-    private List<Item> itens;
+    private String status;
+    private Item item;
     private Astronauta astronauta;
 
     private static final GeradorId gerador = new GeradorId();
 
     public Pedido(){}
 
-    public Pedido(Long id, List<Item> itens, Astronauta astronauta) {
+    public Pedido(Item item, Astronauta astronauta) {
         this.id = gerador.geraId();
-        this.itens = itens;
+        this.status = "PENDENTE";
+        this.item = item;
         this.astronauta = astronauta;
     }
 
@@ -23,12 +23,20 @@ public class Pedido {
         return id;
     }
 
-    public List<Item> getItens() {
-        return itens;
+    public String getStatus() {
+        return status;
     }
 
-    public void setItens(List<Item> itens) {
-        this.itens = itens;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Item getItens() {
+        return item;
+    }
+
+    public void setItens(Item item) {
+        this.item = item;
     }
 
     public Astronauta getAstronauta() {
