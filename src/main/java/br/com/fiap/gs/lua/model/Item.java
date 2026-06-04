@@ -8,6 +8,7 @@ public class Item {
     private Double peso;
     private Double volume;
     private Long idTeamPertencimento;
+    private Boolean estaArmazenado;
 
     private static final GeradorId gerador = new GeradorId();
 
@@ -19,6 +20,7 @@ public class Item {
         this.peso = peso;
         this.volume = volume;
         this.idTeamPertencimento = null;
+        this.estaArmazenado = false;
     }
 
     public Long getId() {
@@ -55,5 +57,13 @@ public class Item {
 
     public void setIdTeamPertencimento(Long idTeamPertencimento) {
         this.idTeamPertencimento = idTeamPertencimento;
+    }
+
+    public Boolean getEstaArmazenado() {
+        return estaArmazenado;
+    }
+
+    public void setEstaArmazenado(Boolean estaArmazenado) {
+        this.estaArmazenado = estaArmazenado;
     }
 }

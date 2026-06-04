@@ -40,7 +40,8 @@ public class ItemService {
 
     public List<ItemDTO> getAll() {
         return itemList.stream().map(
-                i -> new ItemDTO(i.getId(), i.getNome(), i.getPeso(), i.getVolume(), i.getIdTeamPertencimento())
+                i -> new ItemDTO(i.getId(), i.getNome(), i.getPeso(),
+                        i.getVolume(), i.getIdTeamPertencimento(), i.getEstaArmazenado())
         ).collect(Collectors.toList());
     }
 
@@ -51,7 +52,8 @@ public class ItemService {
 
     private List<ItemDTO> passaListaObjParaDTO(List<Item> itens) {
         return itens.stream().map(
-                i -> new ItemDTO(i.getId(), i.getNome(), i.getPeso(), i.getVolume(), i.getIdTeamPertencimento())
+                i -> new ItemDTO(i.getId(), i.getNome(), i.getPeso(),
+                        i.getVolume(), i.getIdTeamPertencimento(), i.getEstaArmazenado())
         ).toList();
     }
 }
