@@ -39,9 +39,3 @@ Nossas principais entidades de domínio são:
 * **Item:** Representação dos recursos físicos, estritamente controlados por variáveis de dimensão e massa.
 * **Robo:** Unidades autônomas de transporte e logística.
 * **Pedido:** Entidade transacional que correlaciona a requisição humana com a operação robótica.
-
-## Como Executar o Projeto
-
-1. Clone este repositório em sua máquina:
-   ```bash
-   git clone [https://github.com/EnzoOFato/FIAP_GS_ArmazenamentoLua.git](https://github.com/EnzoOFato/FIAP_GS_ArmazenamentoLua.git)
